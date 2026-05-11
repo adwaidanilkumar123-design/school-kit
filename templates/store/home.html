@@ -1,0 +1,92 @@
+{% extends 'store/base.html' %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;">
+        <div class="hero-content reveal">
+            <h1>Everything Your Child Needs to Start School Smarter</h1>
+            <p>Premium school essentials designed for comfort, creativity, and confidence.</p>
+            <a href="{{ url_for('product_list') }}" class="btn-primary">Shop Collection</a>
+            <div class="hero-badges">
+                <div class="badge">
+                    <i class="fa-solid fa-shield-check"></i> Quality Checked
+                </div>
+                <div class="badge">
+                    <i class="fa-solid fa-heart"></i> Loved by 10,000+ Parents
+                </div>
+            </div>
+        </div>
+        <div class="hero-image reveal" style="transition-delay: 0.2s;">
+            <img src="{{ url_for('static', filename='images/hero.png') }}" alt="Happy school kids using stationery" style="max-height: 500px; border-radius: 24px; box-shadow: var(--shadow-lg);">
+        </div>
+    </div>
+</section>
+
+<!-- Categories Section -->
+<section id="categories" style="background: var(--white);">
+    <div class="container">
+        <h2 class="section-title reveal">Shop by Category</h2>
+        <div class="product-grid">
+            {% for category in categories %}
+            <div class="product-card reveal" style="text-align: center; padding: 30px; cursor: pointer;">
+                <i class="fa-solid {{ category.icon }}" style="font-size: 3rem; color: var(--primary-blue); margin-bottom: 20px;"></i>
+                <h3 style="color: var(--text-dark);">{{ category.name }}</h3>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Trending Products Section -->
+<section id="trending">
+    <div class="container">
+        <h2 class="section-title reveal">Trending Now</h2>
+        <div class="product-grid">
+            {% for product in products %}
+            <div class="product-card reveal">
+                <div class="product-tags">
+                    {% if product.trending %}
+                    <span class="tag trending">Trending</span>
+                    {% endif %}
+                    {% if product.most_loved %}
+                    <span class="tag discount">Most Loved</span>
+                    {% endif %}
+                </div>
+                <div style="cursor: pointer;" onclick="window.location.href='{{ url_for('product_detail', product_id=product.id) }}'">
+                    <img src="{{ url_for('static', filename=product.image.replace('static/', '')) }}" alt="{{ product.name }}" class="product-image">
+                </div>
+                <div class="product-info">
+                    <div class="product-rating">
+                        <i class="fa-solid fa-star"></i> {{ product.rating }} ({{ product.review_count }})
+                    </div>
+                    <h3 style="cursor: pointer;" onclick="window.location.href='{{ url_for('product_detail', product_id=product.id) }}'">{{ product.name }}</h3>
+                    <div class="product-price">
+                        {% if product.discount_price %}
+                        ₹{{ product.discount_price }} <del>₹{{ product.price }}</del>
+                        {% else %}
+                        ₹{{ product.price }}
+                        {% endif %}
+                    </div>
+                </div>
+                <a href="{{ url_for('product_detail', product_id=product.id) }}" class="btn-primary" style="width: 100%; text-align: center; margin-bottom: 10px; background: var(--primary-blue); box-shadow: none;">View Details</a>
+            </div>
+            {% endfor %}
+        </div>
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="{{ url_for('product_list') }}" class="btn-primary">View All Products</a>
+        </div>
+    </div>
+</section>
+
+<!-- Back to School Banner -->
+<section>
+    <div class="container reveal">
+        <div style="background: var(--grad-button); border-radius: var(--radius-lg); padding: 60px 40px; text-align: center; color: white; position: relative; overflow: hidden; box-shadow: var(--shadow-lg);">
+            <h2 style="font-size: 2.5rem; margin-bottom: 20px;">Limited School Season Offers</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 30px; opacity: 0.9;">Grab the best deals before the season ends. Fast delivery available.</p>
+            <a href="{{ url_for('product_list') }}" style="background: white; color: var(--secondary-orange); padding: 15px 35px; border-radius: var(--radius-pill); font-weight: bold; text-decoration: none; display: inline-block; transition: transform 0.3s;">Shop Now</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

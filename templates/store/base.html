@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Premium School Stationery{% endblock %}</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar glassmorphism">
+        <div class="nav-container">
+            <a href="{{ url_for('home') }}" class="logo">
+                <i class="fa-solid fa-graduation-cap"></i> SchoolKit
+            </a>
+            <div class="nav-links">
+                <a href="{{ url_for('home') }}">Home</a>
+                <a href="{{ url_for('product_list') }}">Shop</a>
+                <a href="{{ url_for('home') }}#categories">Categories</a>
+                <button class="theme-toggle" id="themeToggle"><i class="fa-solid fa-moon"></i></button>
+            </div>
+            <div class="mobile-menu-btn">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>SchoolKit</h3>
+                <p>Premium school essentials designed for comfort, creativity, and confidence.</p>
+            </div>
+            <div class="footer-col">
+                <h3>Contact</h3>
+                <p><i class="fa-brands fa-whatsapp"></i> +91 {{ whatsapp_number }}</p>
+                <p><i class="fa-regular fa-envelope"></i> hello@schoolkit.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 SchoolKit. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/91{{ whatsapp_number }}?text=Hello%20SchoolKit,%20I%20have%20an%20inquiry!" class="floating-wa" target="_blank" title="Chat with us on WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script>
+        const whatsappNumber = "{{ whatsapp_number }}";
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

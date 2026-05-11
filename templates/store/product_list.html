@@ -1,0 +1,42 @@
+{% extends 'store/base.html' %}
+
+{% block title %}All Products - SchoolKit{% endblock %}
+
+{% block content %}
+<section style="padding-top: 120px; background: var(--bg-light); min-height: 100vh;">
+    <div class="container">
+        <h1 class="section-title reveal" style="text-align: left;">All Products</h1>
+        <div class="product-grid">
+            {% for product in products %}
+            <div class="product-card reveal">
+                <div class="product-tags">
+                    {% if product.trending %}
+                    <span class="tag trending">Trending</span>
+                    {% endif %}
+                    {% if product.most_loved %}
+                    <span class="tag discount">Most Loved</span>
+                    {% endif %}
+                </div>
+                <div style="cursor: pointer;" onclick="window.location.href='{{ url_for('product_detail', product_id=product.id) }}'">
+                    <img src="{{ url_for('static', filename=product.image.replace('static/', '')) }}" alt="{{ product.name }}" class="product-image">
+                </div>
+                <div class="product-info">
+                    <div class="product-rating">
+                        <i class="fa-solid fa-star"></i> {{ product.rating }} ({{ product.review_count }})
+                    </div>
+                    <h3 style="cursor: pointer;" onclick="window.location.href='{{ url_for('product_detail', product_id=product.id) }}'">{{ product.name }}</h3>
+                    <div class="product-price">
+                        {% if product.discount_price %}
+                        ₹{{ product.discount_price }} <del>₹{{ product.price }}</del>
+                        {% else %}
+                        ₹{{ product.price }}
+                        {% endif %}
+                    </div>
+                </div>
+                <a href="{{ url_for('product_detail', product_id=product.id) }}" class="btn-primary" style="width: 100%; text-align: center; margin-bottom: 10px; background: var(--primary-blue); box-shadow: none;">View Details</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

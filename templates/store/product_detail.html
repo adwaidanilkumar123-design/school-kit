@@ -1,0 +1,41 @@
+{% extends 'store/base.html' %}
+
+{% block title %}{{ product.name }} - SchoolKit{% endblock %}
+
+{% block content %}
+<section style="padding-top: 120px; background: var(--bg-light); min-height: 100vh;">
+    <div class="container">
+        <div style="background: var(--white); border-radius: var(--radius-lg); padding: 40px; box-shadow: var(--shadow-sm); display: flex; flex-wrap: wrap; gap: 40px;" class="reveal">
+            <!-- Image -->
+            <div style="flex: 1; min-width: 300px; text-align: center;">
+                <img src="{{ url_for('static', filename=product.image.replace('static/', '')) }}" alt="{{ product.name }}" style="max-width: 100%; border-radius: var(--radius-md); box-shadow: var(--shadow-sm);">
+            </div>
+            <!-- Details -->
+            <div style="flex: 1; min-width: 300px; display: flex; flex-direction: column; justify-content: center;">
+                <span style="color: var(--text-light); font-weight: 500; margin-bottom: 10px;">{{ product.category }}</span>
+                <h1 style="font-size: 2.5rem; color: var(--text-dark); margin-bottom: 10px;">{{ product.name }}</h1>
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
+                    <div style="color: var(--secondary-yellow); font-size: 1.2rem;">
+                        <i class="fa-solid fa-star"></i> {{ product.rating }}
+                    </div>
+                    <span style="color: var(--text-light);">({{ product.review_count }} reviews)</span>
+                </div>
+                <div style="font-size: 2rem; font-weight: 700; color: var(--primary-blue); margin-bottom: 20px;">
+                    {% if product.discount_price %}
+                    ₹{{ product.discount_price }} <del style="font-size: 1.2rem; color: var(--text-light); font-weight: 400; margin-left: 10px;">₹{{ product.price }}</del>
+                    {% else %}
+                    ₹{{ product.price }}
+                    {% endif %}
+                </div>
+                <p style="color: var(--text-light); font-size: 1.1rem; line-height: 1.8; margin-bottom: 30px;">
+                    {{ product.description }}
+                </p>
+                
+                <a href="https://wa.me/91{{ whatsapp_number }}?text=Hello%20SchoolKit,%20I%20would%20like%20to%20order:%0A%0A*Product:*%20{{ product.name }}%0A*Price:*%20₹{% if product.discount_price %}{{ product.discount_price }}{% else %}{{ product.price }}{% endif %}%0A%0AIs%20this%20available?" class="btn-whatsapp" target="_blank" style="font-size: 1.2rem; justify-content: center; padding: 15px 30px;">
+                    <i class="fa-brands fa-whatsapp"></i> Order Instantly on WhatsApp
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
